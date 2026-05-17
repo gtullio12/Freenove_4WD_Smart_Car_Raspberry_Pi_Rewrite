@@ -21,7 +21,10 @@ def server_program():
             break
         if str(data) == 'w':
             motor.move_forward()
-
+        if str(data) == 'quit':
+            print('Shutting down motors')
+            motor.stop_motors()
+            break
     conn.close()  # close the connection
 
 
