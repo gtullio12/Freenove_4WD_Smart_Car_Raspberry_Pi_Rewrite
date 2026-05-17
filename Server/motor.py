@@ -1,8 +1,9 @@
 from pca9685 import PCA9685
 import time
 
+pca = PCA9685()
+
 def move_forward():
-    pca = PCA9685()
     # Move left upper wheel first
     pca.set_motor_pwm(0,0)
     pca.set_motor_pwm(1,2000)
