@@ -2,7 +2,7 @@ import socket
 import motor
 
 def server_program():
-    host = socket.gethostname()
+    host = ''
     port = 5000
 
     server_socket = socket.socket()  # get instance
@@ -21,7 +21,7 @@ def server_program():
             if not data:
                 # if data is not received break
                 break
-            if str(data) == 'w':
+            elif str(data) == 'w':
                 print('server recieved: ', str(data))
                 motor.move_forward()
             elif str(data) == 's':

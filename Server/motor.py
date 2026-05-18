@@ -36,6 +36,34 @@ def move_backward():
     pca.set_motor_pwm(4,2000)
     pca.set_motor_pwm(5,0)
 
+def move_forward_right():
+    # Left upper wheel
+    pca.set_motor_pwm(0,-2000)
+    pca.set_motor_pwm(1,0)
+
+    # Left rear
+    pca.set_motor_pwm(3,-2000)
+    pca.set_motor_pwm(2,0)
+
+    # Right upper
+    pca.set_motor_pwm(6,0)
+    pca.set_motor_pwm(7,2000)
+
+    # Right lower
+    pca.set_motor_pwm(4,0)
+    pca.set_motor_pwm(5,2000)
+
+
+#def move_forward_left():
+
+
+#def move_back_left():
+
+
+#def move_back_right():
+
+
+
 
 def stop_motors():
     pca.set_motor_pwm(0,4095)
