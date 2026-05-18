@@ -13,18 +13,29 @@ def server_program():
     server_socket.listen(1)
     conn, address = server_socket.accept()  # accept new connection
     print("Connection from: " + str(address))
-    while True:
-        # receive data stream. it won't accept data packet greater than 1024 bytes
-        data = conn.recv(1024).decode()
-        if not data:
-            # if data is not received break
-            break
-        if str(data) == 'w':
-            motor.move_forward()
-        if str(data) == 'quit':
-            print('Shutting down motors')
-            motor.stop_motors()
-            break
+    conn.settimeout(0.2)
+    try:
+        while True:
+            # receive data stream. it won't accept data packet greater than 1024 bytes
+            data = conn.recv(1024).decode()
+            if not data:
+                # if data is not received break
+                break
+            if str(data) == 'w':
+                print('server recieved: ', str(data))
+                motor.move_forward()
+            elif str(data) == 's':
+                print('server recieved: ', str(data))
+                motor.move_backward()
+            elif str(data) == 'stop':
+                motor.stop_motors()
+            elif str(data) == 'quit':
+                print('Shutting down motors')
+                motor.stop_motors()
+                break
+    except socket.timeout:
+        print('Timeout - stopping motors')
+        motor.stop_motors()
     conn.close()  # close the connection
 
 
