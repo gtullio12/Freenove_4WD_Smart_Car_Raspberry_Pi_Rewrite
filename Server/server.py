@@ -27,6 +27,19 @@ def server_program():
             elif str(data) == 's':
                 print('server recieved: ', str(data))
                 motor.move_backward()
+            elif str(data) == 'a':
+                motor.rotate_left()
+            elif str(data) == 'd':
+                print('moving forward right')
+                motor.rotate_right()
+            elif str(data) == 'wd':
+                motor.move_forward_right()
+            elif str(data) == 'wa':
+                motor.move_forward_left()
+            elif str(data) == 'sd':
+                motor.move_reverse_right()
+            elif str(data) == 'sa':
+                motor.move_reverse_left()
             elif str(data) == 'stop':
                 motor.stop_motors()
             elif str(data) == 'quit':
