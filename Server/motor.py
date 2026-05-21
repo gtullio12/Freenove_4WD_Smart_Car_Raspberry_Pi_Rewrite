@@ -3,7 +3,7 @@ import time
 
 pca = PCA9685()
 
-def move_forward():
+def move_backward():
     # Move left upper wheel first
     pca.set_motor_pwm(0,0)
     pca.set_motor_pwm(1,2000)
@@ -20,7 +20,7 @@ def move_forward():
     pca.set_motor_pwm(4,0)
     pca.set_motor_pwm(5,2000)
 
-def move_backward():
+def move_forward():
     pca.set_motor_pwm(0,2000)
     pca.set_motor_pwm(1,0)
 
@@ -71,72 +71,71 @@ def rotate_left():
 
 def move_forward_right():
     # Left upper wheel
-    pca.set_motor_pwm(0,0)
-    pca.set_motor_pwm(1,1000)
+    pca.set_motor_pwm(0,4000)
+    pca.set_motor_pwm(1,0)
 
     # Left rear
-    pca.set_motor_pwm(3,0)
-    pca.set_motor_pwm(2,1000)
+    pca.set_motor_pwm(3,4000)
+    pca.set_motor_pwm(2,0)
 
     # Right upper
     pca.set_motor_pwm(6,0)
-    pca.set_motor_pwm(7,3000)
+    pca.set_motor_pwm(7,0)
 
     # Right lower
     pca.set_motor_pwm(4,0)
-    pca.set_motor_pwm(5,3000)
+    pca.set_motor_pwm(5,0)
 
 def move_forward_left():
     # Left upper wheel
     pca.set_motor_pwm(0,0)
-    pca.set_motor_pwm(1,3000)
-
-    # Left rear
-    pca.set_motor_pwm(3,0)
-    pca.set_motor_pwm(2,3000)
-
-    # Right upper
-    pca.set_motor_pwm(6,0)
-    pca.set_motor_pwm(7,1000)
-
-    # Right lower
-    pca.set_motor_pwm(4,0)
-    pca.set_motor_pwm(5,1000)
-
-def move_reverse_right():
-    # Left upper wheel
-    pca.set_motor_pwm(0,1000)
     pca.set_motor_pwm(1,0)
 
     # Left rear
-    pca.set_motor_pwm(3,1000)
+    pca.set_motor_pwm(3,0)
     pca.set_motor_pwm(2,0)
 
     # Right upper
-    pca.set_motor_pwm(6,3000)
+    pca.set_motor_pwm(6,4000)
     pca.set_motor_pwm(7,0)
 
     # Right lower
-    pca.set_motor_pwm(4,3000)
+    pca.set_motor_pwm(4,4000)
+    pca.set_motor_pwm(5,0)
+
+def move_reverse_right():
+    # Left upper wheel
+    pca.set_motor_pwm(0,0)
+    pca.set_motor_pwm(1,4000)
+
+    # Left rear
+    pca.set_motor_pwm(3,0)
+    pca.set_motor_pwm(2,4000)
+
+    # Right upper
+    pca.set_motor_pwm(6,0)
+    pca.set_motor_pwm(7,0)
+
+    # Right lower
+    pca.set_motor_pwm(4,0)
     pca.set_motor_pwm(5,0)
 
 def move_reverse_left():
     # Left upper wheel
-    pca.set_motor_pwm(0,3000)
+    pca.set_motor_pwm(0,0)
     pca.set_motor_pwm(1,0)
 
     # Left rear
-    pca.set_motor_pwm(3,3000)
+    pca.set_motor_pwm(3,0)
     pca.set_motor_pwm(2,0)
 
     # Right upper
-    pca.set_motor_pwm(6,1000)
-    pca.set_motor_pwm(7,0)
+    pca.set_motor_pwm(6,0)
+    pca.set_motor_pwm(7,4000)
 
     # Right lower
-    pca.set_motor_pwm(4,1000)
-    pca.set_motor_pwm(5,0)
-
+    pca.set_motor_pwm(4,0)
+    pca.set_motor_pwm(5,4000)
 
 def stop_motors():
     pca.set_motor_pwm(0,4095)
