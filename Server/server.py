@@ -1,6 +1,17 @@
 import socket
 import motor
 
+MOVE_FORWARD = 'move_forward'
+MOVE_BACKWARD = 'move_backward'
+TURN_RIGHT = 'turn_right'
+TURN_LEFT = 'turn_left'
+REVERSE = 'reverse'
+TURN_FORWARD_RIGHT = 'turn_forward_right'
+TURN_FORWARD_LEFT = 'turn_forward_left'
+REVERSE_LEFT = 'reverse_left'
+REVERSE_RIGHT = 'reverse_right'
+STOP = 'stop'
+
 def server_program():
     host = ''
     port = 5000
@@ -21,26 +32,23 @@ def server_program():
             if not data:
                 # if data is not received break
                 break
-            elif str(data) == 'w':
-                print('server recieved: ', str(data))
+            elif str(data) == MOVE_FORWARD:
                 motor.move_forward()
-            elif str(data) == 's':
-                print('server recieved: ', str(data))
+            elif str(data) == REVERSE: 
                 motor.move_backward()
-            elif str(data) == 'a':
+            elif str(data) == TURN_LEFT:
                 motor.rotate_left()
-            elif str(data) == 'd':
-                print('moving forward right')
+            elif str(data) == TURN_RIGHT:
                 motor.rotate_right()
-            elif str(data) == 'wd':
+            elif str(data) == TURN_FORWARD_RIGHT:
                 motor.move_forward_right()
-            elif str(data) == 'wa':
+            elif str(data) == TURN_FORWARD_LEFT:
                 motor.move_forward_left()
-            elif str(data) == 'sd':
+            elif str(data) == REVERSE_RIGHT:
                 motor.move_reverse_right()
-            elif str(data) == 'sa':
+            elif str(data) == REVERSE_LEFT:
                 motor.move_reverse_left()
-            elif str(data) == 'stop':
+            elif str(data) == STOP:
                 motor.stop_motors()
             elif str(data) == 'quit':
                 print('Shutting down motors')

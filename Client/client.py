@@ -6,6 +6,17 @@ pygame.init()
 screen = pygame.display.set_mode((400,300))
 pygame.display.set_caption("RC Car Controller")
 
+MOVE_FORWARD = 'move_forward'
+MOVE_BACKWARD = 'move_backward'
+TURN_RIGHT = 'turn_right'
+TURN_LEFT = 'turn_left'
+REVERSE = 'reverse'
+TURN_FORWARD_RIGHT = 'turn_forward_right'
+TURN_FORWARD_LEFT = 'turn_forward_left'
+REVERSE_LEFT = 'reverse_left'
+REVERSE_RIGHT = 'reverse_right'
+STOP = 'stop'
+
 
 def client_program():
     # Run locally on laptop
@@ -21,25 +32,23 @@ def client_program():
             pygame.event.pump()
             keys = pygame.key.get_pressed()
             if not keys[pygame.K_w] and not keys[pygame.K_s] and not keys[pygame.K_a] and not keys[pygame.K_d]:
-                client_socket.send('stop'.encode())
+                client_socket.send(STOP.encode())
             elif keys[pygame.K_w] and keys[pygame.K_d]:
-                print('turning right now')
-                client_socket.send('wd'.encode())
+                client_socket.send(TURN_FORWARD_RIGHT.encode())
             elif keys[pygame.K_w] and keys[pygame.K_a]:
-                client_socket.send('wa'.encode())
+                client_socket.send(TURN_FORWARD_LEFT.encode())
             elif keys[pygame.K_s] and keys[pygame.K_d]:
-                client_socket.send('sd'.encode())
+                client_socket.send(REVERSE_RIGHT.encode())
             elif keys[pygame.K_s] and keys[pygame.K_a]:
-                client_socket.send('sa'.encode())
+                client_socket.send(REVERSE_LEFT.encode())
             elif keys[pygame.K_a]:
-                client_socket.send('a'.encode())
+                client_socket.send(REVERSE.encode())
             elif keys[pygame.K_d]:
-                client_socket.send('d'.encode())
+                client_socket.send(TURN_RIGHT.encode())
             elif keys[pygame.K_w]:
-                print('Sending w to server')
-                client_socket.send('w'.encode())
+                client_socket.send(MOVE_FORWARD.encode())
             elif keys[pygame.K_s]:
-                client_socket.send('s'.encode())
+                client_socket.send(REVERSE.encode())
 
             time.sleep(0.03) # Delay for 30ms to not overwhelm server
     except KeyboardInterrupt:
