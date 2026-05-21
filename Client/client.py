@@ -21,11 +21,25 @@ def client_program():
             pygame.event.pump()
             keys = pygame.key.get_pressed()
             if not keys[pygame.K_w] and not keys[pygame.K_s] and not keys[pygame.K_a] and not keys[pygame.K_d]:
-                print('Sending stop to server')
                 client_socket.send('stop'.encode())
+            elif keys[pygame.K_w] and keys[pygame.K_d]:
+                print('turning right now')
+                client_socket.send('wd'.encode())
+            elif keys[pygame.K_w] and keys[pygame.K_a]:
+                client_socket.send('wa'.encode())
+            elif keys[pygame.K_s] and keys[pygame.K_d]:
+                client_socket.send('sd'.encode())
+            elif keys[pygame.K_s] and keys[pygame.K_a]:
+                client_socket.send('sa'.encode())
+            elif keys[pygame.K_a]:
+                client_socket.send('a'.encode())
+            elif keys[pygame.K_d]:
+                client_socket.send('d'.encode())
             elif keys[pygame.K_w]:
                 print('Sending w to server')
                 client_socket.send('w'.encode())
+            elif keys[pygame.K_s]:
+                client_socket.send('s'.encode())
 
             time.sleep(0.03) # Delay for 30ms to not overwhelm server
     except KeyboardInterrupt:
