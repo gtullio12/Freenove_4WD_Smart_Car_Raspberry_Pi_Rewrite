@@ -1,5 +1,6 @@
 import socket
 import motor
+import servo
 
 MOVE_FORWARD = 'move_forward'
 MOVE_BACKWARD = 'move_backward'
@@ -11,6 +12,11 @@ TURN_FORWARD_LEFT = 'turn_forward_left'
 REVERSE_LEFT = 'reverse_left'
 REVERSE_RIGHT = 'reverse_right'
 STOP = 'stop'
+TILT_UP = 'tilt_up'
+TILT_DOWN = 'tilt_down'
+PAN_LEFT = 'pan_LEFT'
+PAN_RIGHT = 'pan_RIGHT'
+
 
 def server_program():
     host = ''
@@ -24,7 +30,6 @@ def server_program():
     server_socket.listen(1)
     conn, address = server_socket.accept()  # accept new connection
     print("Connection from: " + str(address))
-    conn.settimeout(0.2)
     try:
         while True:
             # receive data stream. it won't accept data packet greater than 1024 bytes
@@ -32,6 +37,18 @@ def server_program():
             if not data:
                 # if data is not received break
                 break
+            elif str(data) == PAN_LEFT:
+                print('pan the servo left')
+                #servo.pan(0)
+            elif str(data) == PAN_RIGHT:
+                #servo.tilt(0)
+                print('pan the servo right')
+            elif str(data) == TILT_UP:
+                #servo.tilt(0)
+                print('tilt the servo up')
+            elif str(data) == TILT_DOWN:
+                #servo.tilt(0)
+                print('tilt the servo down')
             elif str(data) == MOVE_FORWARD:
                 motor.move_forward()
             elif str(data) == REVERSE: 

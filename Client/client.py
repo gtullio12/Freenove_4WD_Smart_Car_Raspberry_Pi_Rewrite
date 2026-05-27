@@ -16,6 +16,10 @@ TURN_FORWARD_LEFT = 'turn_forward_left'
 REVERSE_LEFT = 'reverse_left'
 REVERSE_RIGHT = 'reverse_right'
 STOP = 'stop'
+TILT_UP = 'tilt_up'
+TILT_DOWN = 'tilt_down'
+PAN_LEFT = 'pan_LEFT'
+PAN_RIGHT = 'pan_RIGHT'
 
 
 def client_program():
@@ -31,8 +35,17 @@ def client_program():
         while True:
             pygame.event.pump()
             keys = pygame.key.get_pressed()
-            if not keys[pygame.K_w] and not keys[pygame.K_s] and not keys[pygame.K_a] and not keys[pygame.K_d]:
+            if not keys[pygame.K_w] and not keys[pygame.K_s] and not keys[pygame.K_a] and not keys[pygame.K_d] and keys[pygame.K_UP] and keys[pygame.K_DOWN] and keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]:
                 client_socket.send(STOP.encode())
+            elif keys[pygame.K_UP]:
+                print('sending server tilt up')
+                client_socket.send(TILT_UP.encode())
+            elif keys[pygame.K_DOWN]:
+                client_socket.send(TILT_DOWN.encode())
+            elif keys[pygame.K_LEFT]:
+                client_socket.send(PAN_LEFT.encode())
+            elif keys[pygame.K_RIGHT]:
+                client_socket.send(PAN_RIGHT.encode())
             elif keys[pygame.K_w] and keys[pygame.K_d]:
                 client_socket.send(TURN_FORWARD_RIGHT.encode())
             elif keys[pygame.K_w] and keys[pygame.K_a]:

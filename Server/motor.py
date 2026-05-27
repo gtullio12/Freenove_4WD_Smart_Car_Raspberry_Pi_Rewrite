@@ -1,5 +1,4 @@
 from pca9685 import PCA9685
-import time
 
 pca = PCA9685()
 
