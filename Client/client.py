@@ -35,7 +35,7 @@ def client_program():
         while True:
             pygame.event.pump()
             keys = pygame.key.get_pressed()
-            if not keys[pygame.K_w] and not keys[pygame.K_s] and not keys[pygame.K_a] and not keys[pygame.K_d] and keys[pygame.K_UP] and keys[pygame.K_DOWN] and keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]:
+            if not keys[pygame.K_w] and not keys[pygame.K_s] and not keys[pygame.K_a] and not keys[pygame.K_d] and not keys[pygame.K_UP] and not keys[pygame.K_DOWN] and not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
                 client_socket.send(STOP.encode())
             elif keys[pygame.K_UP]:
                 print('sending server tilt up')
