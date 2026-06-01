@@ -17,6 +17,8 @@ TILT_DOWN = 'tilt_down'
 PAN_LEFT = 'pan_LEFT'
 PAN_RIGHT = 'pan_RIGHT'
 
+servo_angle_adjust = 10
+
 
 def server_program():
     host = ''
@@ -25,6 +27,9 @@ def server_program():
     server_socket = socket.socket()  # get instance
 
     server_socket.bind((host, port))  # bind host address and port together
+
+    # Set servo to default
+    servo.reset_servos()
 
     # configure how many client the server can listen simultaneously
     server_socket.listen(1)
@@ -38,17 +43,13 @@ def server_program():
                 # if data is not received break
                 break
             elif str(data) == PAN_LEFT:
-                print('pan the servo left')
-                #servo.pan(0)
+                servo.set_pan_servo_pwm(servo_angle_adjust)
             elif str(data) == PAN_RIGHT:
-                #servo.tilt(0)
-                print('pan the servo right')
+                servo.set_pan_servo_pwm(-servo_angle_adjust)
             elif str(data) == TILT_UP:
-                #servo.tilt(0)
-                print('tilt the servo up')
+                servo.set_tilt_servo_pwm(servo_angle_adjust)
             elif str(data) == TILT_DOWN:
-                #servo.tilt(0)
-                print('tilt the servo down')
+                servo.set_tilt_servo_pwm(-servo_angle_adjust)
             elif str(data) == MOVE_FORWARD:
                 motor.move_forward()
             elif str(data) == REVERSE: 
@@ -76,6 +77,7 @@ def server_program():
         motor.stop_motors()
     conn.close()  # close the connection
 
+    servo.reset_servos()
 
 
 if __name__ == '__main__':
