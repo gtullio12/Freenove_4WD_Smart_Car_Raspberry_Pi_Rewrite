@@ -19,24 +19,24 @@ TILT_UP = 'tilt_up'
 TILT_DOWN = 'tilt_down'
 PAN_LEFT = 'pan_LEFT'
 PAN_RIGHT = 'pan_RIGHT'
-START_STREAMING = 'start_streaming'
-END_STREAMING = 'end_streaming'
 
 servo_angle_adjust = 10
 
-is_streaming = False
+is_streaming = True 
 
-host = ''
-port = 5000
+key_press_socket = socket.socket()
+key_press_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+key_press_socket.bind(('',5000))
 
-server_socket = socket.socket()  # get instance
-
-server_socket.bind((host, port))  # bind host address and port together
+streaming_socket = socket.socket()  # get instance
+streaming_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+streaming_socket.bind(('', 5001))  # bind host address and port together
 
 # configure how many client the server can listen simultaneously
-server_socket.listen(1)
-conn, address = server_socket.accept()  # accept new connection
-print("Connection from: " + str(address))
+streaming_socket.listen(1)
+key_press_socket.listen(1)
+key_press_conn, key_press_address = key_press_socket.accept()  # accept new connection
+streaming_conn, streaming_address = streaming_socket.accept()  # accept new connection
 
 def key_presses():
     print('starting key presses thread')
@@ -47,15 +47,10 @@ def key_presses():
     try:
         while True:
             # receive data stream. it won't accept data packet greater than 1024 bytes
-            data = conn.recv(1024).decode()
+            data = key_press_conn.recv(1024).decode()
             if not data:
                 # if data is not received break
                 break
-            elif str(data) == START_STREAMING:
-                global is_streaming
-                is_streaming = True
-                streaming_thread = threading.Thread(target=streaming)
-                streaming_thread.start()
             elif str(data) == PAN_LEFT:
                 servo.set_pan_servo_pwm(servo_angle_adjust)
             elif str(data) == PAN_RIGHT:
@@ -90,20 +85,24 @@ def key_presses():
         print('Timeout - stopping motors')
         motor.stop_motors()
 
+    global is_streaming
     is_streaming = False
-    conn.close()  # close the connection
+    key_press_socket.close()  # close the connection
 
     servo.reset_servos()
 
 def streaming():
-    print('starting streaming thread')
-    while is_streaming == True:
+    while is_streaming:
+        print('in server, getting current frame')
         frame = camera.get_current_frame()
-        size = len(frame)
-        conn.sendall(size.to_bytes(4, 'big'))  # send size first
-        conn.sendall(frame.tobytes())   # then frame
-
+        data = frame.tobytes()
+        size = len(data)
+        streaming_conn.sendall(size.to_bytes(4, 'big'))
+        streaming_conn.sendall(data)
+    print('is_streaming: ', is_streaming)
 
 key_presses_thread = threading.Thread(target=key_presses)
 key_presses_thread.start()
 
+streaming_thread = threading.Thread(target=streaming)
+streaming_thread.start()
