@@ -8,11 +8,9 @@ camera.configure(camera.create_preview_configuration(
     main={"format": "RGB888"}
 ))
 
+camera.start()
 
 def get_current_frame() -> ndarray:
-    print('taking picture now...')
-    camera.start()
-    arr = camera.capture_array("main")
-    return arr
+    return camera.capture_array("main")
 
 
