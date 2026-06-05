@@ -1,5 +1,7 @@
 # Freenove 4WD RC Car — Firmware Rewrite
 
+**[View Project Page](https://gtullio12.github.io/bare-metal/rc-car.html)**
+
 A ground-up rewrite of the firmware and control system for the [Freenove 4WD Smart Car](https://store.freenove.com/products/fnk0043) built on a Raspberry Pi. The original codebase was replaced with a clean, minimal Python implementation — no bloat, no unnecessary abstractions, no external server frameworks.
 
 Controlled in real time from a laptop over WiFi using WASD keys and arrow keys, with a live camera feed streamed back to the controller window.
